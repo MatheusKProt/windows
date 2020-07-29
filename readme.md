@@ -6,7 +6,7 @@
 
 - `Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))`
 - `choco feature enable -n allowGlobalConfirmation`
-- `choco upgrade googlechrome vscode firacode nodejs-lts yarn git docker-desktop insomnia-rest-api-client lightshot licecap notepadplusplus spotify discord`
+- `choco upgrade googlechrome vscode firacode nodejs-lts yarn git docker-desktop insomnia-rest-api-client lightshot licecap notepadplusplus spotify discord pycharm`
 
 - `yarn global add @adonisjs/cli matheuskprot`
 
