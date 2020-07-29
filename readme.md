@@ -53,3 +53,4 @@
 
 - `Invoke-WebRequest https://raw.githubusercontent.com/MatheusKProt/windows/master/Microsoft.PowerShell_profile.ps1 -o Microsoft.PowerShell_profile.ps1`
 - `Copy-Item Microsoft.PowerShell_profile.ps1 -Destination $profile`
+- `powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61`
