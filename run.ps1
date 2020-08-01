@@ -47,7 +47,7 @@ if ($State -eq 1) {
 	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass -Force
 	Install-Module -Name PowerShellGet -Force
 	2 | Out-File -FilePath .state
-	Read-Host Execute novamente o script.
+	Read-Host Feche o terminal e execute novamente o script
 	exit
 }
 elseif ($State -eq 2) {
@@ -83,13 +83,8 @@ elseif ($State -eq 3) {
 	powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
 	powercfg /hibernate off
 	
-	4 | Out-File -FilePath .state
-	Read-Host O computador sera reiniciado novamente, apos o processo execute novamente o script.
-	Restart-Computer
-}
-elseif ($State -eq 4) {
-	Read-Host Tudo pronto, selecione a fonte Consolas no cmd/powershell
 	Remove-Item -Force -Path ".state"
+	Read-Host Tudo pronto
 	exit
 }
 else {
