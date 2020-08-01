@@ -26,11 +26,9 @@ function installCorsair {
 	Invoke-WebRequest https://elgato-edge.s3.amazonaws.com/corsairts-legacydownloads/K40%20setup%201.0.0.4%20120313.exe.zip -o K40.zip
 	tar -xf K40.zip
 	Remove-Item K40.zip -Force
-	Set-Location K40
 	Rename-Item -Path "K40 setup 1.0.0.4 120313.exe" -NewName "K40.exe"
 	Start-Process ./K40.exe -Wait
-	Set-Location ..
-	Remove-Item K40 -Recurse -Force -Confirm:$false
+	Remove-Item K40.exe -Force
 }
 function installwsl {
 	Invoke-WebRequest https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi -o wsl.msi
