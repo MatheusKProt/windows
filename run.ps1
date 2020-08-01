@@ -19,11 +19,9 @@ function installDocker {
 }
 
 function installCorsair {
-	Invoke-WebRequest http://downloads.corsair.com/Files/Gaming-Headsets/CorsairHeadsetSetup_Release_2.0.36.msi -o Headset.msi
-	Start-Process ./Headset.msi -Wait
-	
 	Invoke-WebRequest http://downloads.corsair.com/Files/CUE/iCUESetup_3.30.97_release.msi -o iCUE.msi
 	Start-Process ./iCUE.msi -Wait
+	Remove-Item iCUE.msi -Force
 
 	Invoke-WebRequest https://elgato-edge.s3.amazonaws.com/corsairts-legacydownloads/K40%20setup%201.0.0.4%20120313.exe.zip -o K40.zip
 	tar -xf K40.zip
@@ -42,6 +40,11 @@ $State = Get-Content -Path .state
 
 if ($State -eq 1) {
 	Install-Module -Name PowerShellGet -Force
+	2 | Out-File -FilePath .state
+	Read-Host Execute novamente o script.
+	exit
+}
+elseif ($State -eq 2) {
 	Install-Module -Name posh-git -AllowPrerelease -Force
 
 	Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
@@ -58,22 +61,22 @@ if ($State -eq 1) {
 	Start-Process ./environment.bat -Wait -NoNewWindow
 	SETX /M prompt "$('$E[1;32;40m')$([char]0x2192)$(' $E[1;36;40m$p$_$E[1;35;40m> $E[1;37;40m')"
 
-	2 | Out-File -FilePath .state
+	3 | Out-File -FilePath .state
 	Read-Host O computador sera reiniciado, apos o processo execute novamente o script.
 	Restart-Computer
 }
-elseif ($State -eq 2) {
+elseif ($State -eq 3) {
 	installColorTool
 	installDocker
 	installCorsair
 
 	Copy-Item Microsoft.PowerShell_profile.ps1 -Destination $profile
 	
-	3 | Out-File -FilePath .state
+	4 | Out-File -FilePath .state
 	Read-Host O computador sera reiniciado novamente, apos o processo execute novamente o script.
 	Restart-Computer
 }
-elseif ($State -eq 3) {
+elseif ($State -eq 4) {
 	Read-Host Tudo pronto, selecione a fonte Consolas no cmd/powershell
 	Remove-Item -Force -Path ".state"
 	exit
