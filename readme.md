@@ -36,9 +36,6 @@
   - `docker run --name pgadmin --network=postgres-network -p 15432:80 -e "PGADMIN_DEFAULT_EMAIL=Email" -e "PGADMIN_DEFAULT_PASSWORD=Pass" -d dpage/pgadmin4`
 
 - ### Corsair
-  - `Invoke-WebRequest http://downloads.corsair.com/Files/Gaming-Headsets/CorsairHeadsetSetup_Release_2.0.36.msi -o Headset.msi`
-  - `Start-Process ./Headset.msi -Wait`
-  - `Remove-Item Headset.msip -Force`
   - `Invoke-WebRequest http://downloads.corsair.com/Files/CUE/iCUESetup_3.30.97_release.msi -o iCUE.msi`
   - `Start-Process ./iCUE.msi -Wait`
   - `Remove-Item iCUE.msi -Force`
