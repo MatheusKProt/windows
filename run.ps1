@@ -37,6 +37,7 @@ if (!(Test-Path -path .state)) {
 	1 | Out-File -FilePath .state
 }
 $State = Get-Content -Path .state
+Set-Location $env:userprofile\Downloads
 
 if ($State -eq 1) {
 	Install-Module -Name PowerShellGet -Force
