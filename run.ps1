@@ -42,6 +42,7 @@ if (!(Test-Path -path .state)) {
 $State = Get-Content -Path .state
 
 if ($State -eq 1) {
+	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass -Force
 	Install-Module -Name PowerShellGet -Force
 	2 | Out-File -FilePath .state
 	Read-Host Execute novamente o script.
