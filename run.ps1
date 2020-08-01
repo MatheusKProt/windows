@@ -37,6 +37,23 @@ function installwsl {
 	Start-Process ./wsl.msi -Wait
 	Remove-Item wsl.msi -Force
 }
+function installchoco {
+	Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+	choco feature enable -n allowGlobalConfirmation
+	
+	choco upgrade googlechrome 
+	choco upgrade vscode 
+	choco upgrade firacode 
+	choco upgrade nodejs-lts 
+	choco upgrade yarn git 
+	choco upgrade docker-desktop 
+	choco upgrade insomnia-rest-api-client 
+	choco upgrade lightshot 
+	choco upgrade licecap 
+	choco upgrade notepadplusplus 
+	choco upgrade spotify 
+	choco upgrade discord
+}
 
 if (!(Test-Path -path .state)) {
 	1 | Out-File -FilePath .state
@@ -53,21 +70,21 @@ if ($State -eq 1) {
 elseif ($State -eq 2) {
 	Install-Module -Name posh-git -AllowPrerelease -Force
 
-	Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+	installchoco
 
-	choco feature enable -n allowGlobalConfirmation
-	choco upgrade googlechrome vscode firacode nodejs-lts yarn git docker-desktop insomnia-rest-api-client lightshot licecap notepadplusplus spotify discord
-
+	code --install-extension shan.code-settings-sync
+	
 	yarn global add @adonisjs/cli matheuskprot
 
-	Start-Process mkp -ArgumentList "create ls `"dir`"" -Wait -NoNewWindow
 	mkdir $env:userprofile\Documents\NodeJS
 	mkdir $env:userprofile\Documents\Sanep
 	Start-Process mkp -ArgumentList "create:cd js `"$env:userprofile\Documents\NodeJS`"" -Wait -NoNewWindow
 	Start-Process mkp -ArgumentList "create:cd sanep `"$env:userprofile\Documents\Sanep`"" -Wait -NoNewWindow
+	Start-Process mkp -ArgumentList "create ls `"dir`"" -Wait -NoNewWindow
 
 	Start-Process ./environment.bat -Wait -NoNewWindow
 	SETX /M prompt "$('$E[1;32;40m')$([char]0x2192)$(' $E[1;36;40m$p$_$E[1;35;40m> $E[1;37;40m')"
+	
 	installwsl
 
 	3 | Out-File -FilePath .state
