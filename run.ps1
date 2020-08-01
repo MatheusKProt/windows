@@ -56,7 +56,9 @@ elseif ($State -eq 2) {
 
 	Start-Process mkp -ArgumentList "create ls `"dir`"" -Wait -NoNewWindow
 	mkdir $env:userprofile\Documents\NodeJS
+	mkdir $env:userprofile\Documents\Sanep
 	Start-Process mkp -ArgumentList "create:cd js `"$env:userprofile\Documents\NodeJS`"" -Wait -NoNewWindow
+	Start-Process mkp -ArgumentList "create:cd sanep `"$env:userprofile\Documents\Sanep`"" -Wait -NoNewWindow
 
 	Start-Process ./environment.bat -Wait -NoNewWindow
 	SETX /M prompt "$('$E[1;32;40m')$([char]0x2192)$(' $E[1;36;40m$p$_$E[1;35;40m> $E[1;37;40m')"
@@ -71,6 +73,7 @@ elseif ($State -eq 3) {
 	installCorsair
 
 	Copy-Item Microsoft.PowerShell_profile.ps1 -Destination $profile
+	powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
 	
 	4 | Out-File -FilePath .state
 	Read-Host O computador sera reiniciado novamente, apos o processo execute novamente o script.
