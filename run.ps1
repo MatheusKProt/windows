@@ -16,8 +16,8 @@ function installDocker {
 	$pgEmail = Read-Host -Prompt 'Email para acesso ao pgadmin'
 	$pgPass = Read-Host -Prompt 'Senha para acesso ao pgadmin'
 	docker run --name pgadmin --network=postgres-network -p 15432:80 -e "PGADMIN_DEFAULT_EMAIL=$pgEmail" -e "PGADMIN_DEFAULT_PASSWORD=$pgPass" -d dpage/pgadmin4
-	Read-Host IP Postgres
 	docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' postgres
+	Read-Host IP Postgres
 }
 
 function installCorsair {
