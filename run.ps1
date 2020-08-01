@@ -62,6 +62,7 @@ elseif ($State -eq 2) {
 
 	Start-Process ./environment.bat -Wait -NoNewWindow
 	SETX /M prompt "$('$E[1;32;40m')$([char]0x2192)$(' $E[1;36;40m$p$_$E[1;35;40m> $E[1;37;40m')"
+	dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 
 	3 | Out-File -FilePath .state
 	Read-Host O computador sera reiniciado, apos o processo execute novamente o script.
