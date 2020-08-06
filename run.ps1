@@ -45,7 +45,8 @@ function installchoco {
 	choco upgrade vscode 
 	choco upgrade firacode 
 	choco upgrade nodejs-lts 
-	choco upgrade yarn git 
+	choco upgrade yarn 
+	choco upgrade git 
 	choco upgrade docker-desktop 
 	choco upgrade insomnia-rest-api-client 
 	choco upgrade lightshot 
