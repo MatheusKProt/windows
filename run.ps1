@@ -72,8 +72,6 @@ elseif ($State -eq 2) {
 	Install-Module -Name posh-git -AllowPrerelease -Force
 
 	installchoco
-
-	code --install-extension shan.code-settings-sync
 	
 	yarn global add @adonisjs/cli matheuskprot
 
