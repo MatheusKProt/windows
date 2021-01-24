@@ -36,11 +36,16 @@ function installCorsair {
 	Start-Process ./K40.exe -Wait
 	Remove-Item K40.exe -Force
 }
+
 function installwsl {
+	dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+	dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 	Invoke-WebRequest https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi -o wsl.msi
 	Start-Process ./wsl.msi -Wait
 	Remove-Item wsl.msi -Force
+	wsl --set-default-version 2
 }
+
 function installchoco {
 	Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 	choco feature enable -n allowGlobalConfirmation
@@ -58,6 +63,9 @@ function installchoco {
 	choco upgrade notepadplusplus 
 	choco upgrade spotify 
 	choco upgrade discord
+	choco upgrade slack
+	choco upgrade zoom
+	choco upgrade arduino
 }
 
 if (!(Test-Path -path .state)) {
@@ -80,9 +88,9 @@ elseif ($State -eq 2) {
 	yarn global add @adonisjs/cli matheuskprot
 
 	mkdir $env:userprofile\Documents\NodeJS
-	mkdir $env:userprofile\Documents\Sanep
+	mkdir $env:userprofile\Documents\EXEHDA
 	Start-Process mkp -ArgumentList "create:cd js `"$env:userprofile\Documents\NodeJS`"" -Wait -NoNewWindow
-	Start-Process mkp -ArgumentList "create:cd sanep `"$env:userprofile\Documents\Sanep`"" -Wait -NoNewWindow
+	Start-Process mkp -ArgumentList "create:cd exehda `"$env:userprofile\Documents\EXEHDA`"" -Wait -NoNewWindow
 	Start-Process mkp -ArgumentList "create ls `"dir`"" -Wait -NoNewWindow
 
 	Start-Process ./environment.bat -Wait -NoNewWindow
