@@ -33,12 +33,16 @@ function installCorsair {
 	Remove-Item K40.exe -Force
 }
 
-function installwsl {
+function installWSL {
 	dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 	dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+}
+
+function installWSLTwo {
 	Invoke-WebRequest https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi -o wsl.msi
 	Start-Process ./wsl.msi -Wait
 	Remove-Item wsl.msi -Force
+	wsl --set-default-version 2
 }
 
 function installchoco {
@@ -91,14 +95,14 @@ elseif ($State -eq 2) {
 	Start-Process ./environment.bat -Wait -NoNewWindow
 	SETX /M prompt "$('$E[1;32;40m')$([char]0x2192)$(' $E[1;36;40m$p$_$E[1;35;40m> $E[1;37;40m')"
 	
-	installwsl
+	installWSL
 
 	3 | Out-File -FilePath .state
 	Read-Host O computador sera reiniciado, apos o processo execute novamente o script.
 	Restart-Computer
 }
 elseif ($State -eq 3) {
-	wsl --set-default-version 2
+	installWSLTwo
 	installColorTool
 	installDocker
 	installCorsair
