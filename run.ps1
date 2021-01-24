@@ -12,12 +12,14 @@ function installDocker {
 	docker pull kartoza/postgis
 	docker pull dpage/pgadmin4
 	docker pull redis
+	docker pull mysql
 	docker network create --driver bridge network
 	docker run --name postgres --network=network -p 5432:5432 -d kartoza/postgis
 	$pgEmail = Read-Host -Prompt 'Email para acesso ao pgadmin'
 	$pgPass = Read-Host -Prompt 'Senha para acesso ao pgadmin'
 	docker run --name pgadmin --network=network -p 15432:80 -e "PGADMIN_DEFAULT_EMAIL=$pgEmail" -e "PGADMIN_DEFAULT_PASSWORD=$pgPass" -d dpage/pgadmin4
 	docker run --name redis --network=network -p 6379:6379 -d redis
+	docker run --name mysql --network=network -e MYSQL_ROOT_PASSWORD=M@th579264589eus -d mysql
 }
 
 function installCorsair {
@@ -65,6 +67,7 @@ function installchoco {
 	choco upgrade slack
 	choco upgrade zoom
 	choco upgrade arduino
+	choco upgrade mysql.workbench
 }
 
 if (!(Test-Path -path .state)) {
