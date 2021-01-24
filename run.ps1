@@ -39,7 +39,6 @@ function installwsl {
 	Invoke-WebRequest https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi -o wsl.msi
 	Start-Process ./wsl.msi -Wait
 	Remove-Item wsl.msi -Force
-	wsl --set-default-version 2
 }
 
 function installchoco {
@@ -99,6 +98,7 @@ elseif ($State -eq 2) {
 	Restart-Computer
 }
 elseif ($State -eq 3) {
+	wsl --set-default-version 2
 	installColorTool
 	installDocker
 	installCorsair
