@@ -8,25 +8,7 @@ function installColorTool {
 	Remove-Item ColorTool -Recurse -Force -Confirm:$false
 }
 
-function installDocker {
-	docker pull kartoza/postgis
-	docker pull dpage/pgadmin4
-	docker pull redis
-	docker pull mysql
-	docker network create --driver bridge network
-	docker run --name postgres --network=network -p 5432:5432 -d kartoza/postgis
-	$pgEmail = Read-Host -Prompt 'Email para acesso ao pgadmin'
-	$pgPass = Read-Host -Prompt 'Senha para acesso ao pgadmin'
-	docker run --name pgadmin --network=network -p 15432:80 -e "PGADMIN_DEFAULT_EMAIL=$pgEmail" -e "PGADMIN_DEFAULT_PASSWORD=$pgPass" -d dpage/pgadmin4
-	docker run --name redis --network=network -p 6379:6379 -d redis
-	docker run --name mysql --network=network -p 3306:3306 -e "MYSQL_ROOT_PASSWORD=$pgPass" -d mysql
-}
-
 function installCorsair {
-	Invoke-WebRequest http://downloads.corsair.com/Files/CUE/iCUESetup_3.30.97_release.msi -o iCUE.msi
-	Start-Process ./iCUE.msi -Wait
-	Remove-Item iCUE.msi -Force
-
 	Invoke-WebRequest https://elgato-edge.s3.amazonaws.com/corsairts-legacydownloads/K40%20setup%201.0.0.4%20120313.exe.zip -o K40.zip
 	tar -xf K40.zip
 	Remove-Item K40.zip -Force
@@ -51,23 +33,21 @@ function installchoco {
 	Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 	choco feature enable -n allowGlobalConfirmation
 	
-	choco upgrade googlechrome 
-	choco upgrade vscode 
-	choco upgrade firacode 
-	choco upgrade nodejs-lts 
-	choco upgrade yarn 
-	choco upgrade git 
-	choco upgrade docker-desktop 
-	choco upgrade insomnia-rest-api-client 
-	choco upgrade lightshot 
-	choco upgrade licecap 
-	choco upgrade notepadplusplus 
-	choco upgrade spotify 
-	choco upgrade discord
-	choco upgrade slack
-	choco upgrade zoom
-	choco upgrade arduino
-	choco upgrade mysql.workbench
+	choco upgrade googlechrome             --install-arguments="'/DIR=Z:\chrome'"
+	choco upgrade vscode                   --install-arguments="'/DIR=Z:\vscode'"
+	choco upgrade firacode                 --install-arguments="'/DIR=Z:\firacode'"
+	choco upgrade nodejs-lts               --install-arguments="'/DIR=Z:\nodejs'"
+	choco upgrade yarn                     --install-arguments="'/DIR=Z:\yarn'"
+	choco upgrade git                      --install-arguments="'/DIR=Z:\git'"
+	choco upgrade insomnia-rest-api-client --install-arguments="'/DIR=Z:\insomnia'"
+	choco upgrade lightshot                --install-arguments="'/DIR=Z:\lightshot'"
+	choco upgrade licecap                  --install-arguments="'/DIR=Z:\licecap'"
+	choco upgrade notepadplusplus          --install-arguments="'/DIR=Z:\notepad'"
+	choco upgrade spotify                  --install-arguments="'/DIR=Z:\spotify'"
+	choco upgrade discord                  --install-arguments="'/DIR=Z:\discord'"
+	choco upgrade slack                    --install-arguments="'/DIR=Z:\slack'"
+	choco upgrade zoom                     --install-arguments="'/DIR=Z:\zoom'"
+	choco upgrade mysql.workbench          --install-arguments="'/DIR=Z:\workbench'"
 }
 
 if (!(Test-Path -path .state)) {
@@ -79,7 +59,7 @@ if ($State -eq 1) {
 	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass -Force
 	Install-Module -Name PowerShellGet -Force
 	2 | Out-File -FilePath .state
-	Read-Host Feche o terminal e execute novamente o script
+	Read-Host Feche o terminal e execute o script novamente.
 	exit
 }
 elseif ($State -eq 2) {
@@ -87,13 +67,7 @@ elseif ($State -eq 2) {
 
 	installchoco
 	
-	yarn global add @adonisjs/cli matheuskprot
-
-	mkdir $env:userprofile\Documents\NodeJS
-	mkdir $env:userprofile\Documents\EXEHDA
-	Start-Process mkp -ArgumentList "create:cd js `"$env:userprofile\Documents\NodeJS`"" -Wait -NoNewWindow
-	Start-Process mkp -ArgumentList "create:cd exehda `"$env:userprofile\Documents\EXEHDA`"" -Wait -NoNewWindow
-	Start-Process mkp -ArgumentList "create ls `"dir`"" -Wait -NoNewWindow
+	yarn global add @adonisjs/cli
 
 	Start-Process ./environment.bat -Wait -NoNewWindow
 	SETX /M prompt "$('$E[1;32;40m')$([char]0x2192)$(' $E[1;36;40m$p$_$E[1;35;40m> $E[1;37;40m')"
@@ -101,13 +75,12 @@ elseif ($State -eq 2) {
 	installWSL
 
 	3 | Out-File -FilePath .state
-	Read-Host O computador sera reiniciado, apos o processo execute novamente o script.
+	Read-Host O computador sera reiniciado, após execute o script novamente.
 	Restart-Computer
 }
 elseif ($State -eq 3) {
 	installWSLTwo
 	installColorTool
-	installDocker
 	installCorsair
 
 	Copy-Item Microsoft.PowerShell_profile.ps1 -Destination $profile
@@ -115,10 +88,11 @@ elseif ($State -eq 3) {
 	powercfg /hibernate off
 	
 	Remove-Item -Force -Path ".state"
-	Read-Host Tudo pronto
+	Read-Host Tudo pronto!
 	exit
 }
 else {
-	Read-Host Algo deu errado!
+	Remove-Item -Force -Path ".state"
+	Read-Host Algo deu errado, tente novamente!
 	exit
 }
