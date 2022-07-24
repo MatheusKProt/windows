@@ -33,21 +33,21 @@ function installchoco {
 	Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 	choco feature enable -n allowGlobalConfirmation
 	
-	choco upgrade googlechrome             --install-arguments="'/DIR=Z:\chrome'"
-	choco upgrade vscode                   --install-arguments="'/DIR=Z:\vscode'"
-	choco upgrade firacode                 --install-arguments="'/DIR=Z:\firacode'"
-	choco upgrade nodejs-lts               --install-arguments="'/DIR=Z:\nodejs'"
-	choco upgrade yarn                     --install-arguments="'/DIR=Z:\yarn'"
-	choco upgrade git                      --install-arguments="'/DIR=Z:\git'"
-	choco upgrade insomnia-rest-api-client --install-arguments="'/DIR=Z:\insomnia'"
-	choco upgrade lightshot                --install-arguments="'/DIR=Z:\lightshot'"
-	choco upgrade licecap                  --install-arguments="'/DIR=Z:\licecap'"
-	choco upgrade notepadplusplus          --install-arguments="'/DIR=Z:\notepad'"
-	choco upgrade spotify                  --install-arguments="'/DIR=Z:\spotify'"
-	choco upgrade discord                  --install-arguments="'/DIR=Z:\discord'"
-	choco upgrade slack                    --install-arguments="'/DIR=Z:\slack'"
-	choco upgrade zoom                     --install-arguments="'/DIR=Z:\zoom'"
-	choco upgrade mysql.workbench          --install-arguments="'/DIR=Z:\workbench'"
+	choco upgrade googlechrome             --install-arguments="'/DIR=A:\Program Files\chrome'"
+	choco upgrade vscode                   --install-arguments="'/DIR=A:\Program Files\vscode'"
+	choco upgrade firacode                 --install-arguments="'/DIR=A:\Program Files\firacode'"
+	choco upgrade nodejs-lts               --install-arguments="'/DIR=A:\Program Files\nodejs'"
+	choco upgrade yarn                     --install-arguments="'/DIR=A:\Program Files\yarn'"
+	choco upgrade git                      --install-arguments="'/DIR=A:\Program Files\git'"
+	choco upgrade insomnia-rest-api-client --install-arguments="'/DIR=A:\Program Files\insomnia'"
+	choco upgrade lightshot                --install-arguments="'/DIR=A:\Program Files\lightshot'"
+	choco upgrade licecap                  --install-arguments="'/DIR=A:\Program Files\licecap'"
+	choco upgrade notepadplusplus          --install-arguments="'/DIR=A:\Program Files\notepad'"
+	choco upgrade spotify                  --install-arguments="'/DIR=A:\Program Files\spotify'"
+	choco upgrade discord                  --install-arguments="'/DIR=A:\Program Files\discord'"
+	choco upgrade slack                    --install-arguments="'/DIR=A:\Program Files\slack'"
+	choco upgrade zoom                     --install-arguments="'/DIR=A:\Program Files\zoom'"
+	choco upgrade mysql.workbench          --install-arguments="'/DIR=A:\Program Files\workbench'"
 }
 
 if (!(Test-Path -path .state)) {
